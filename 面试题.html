@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>面试题</title>
+</head>
+<style>
+    .box {
+        position: relative;
+    }
+    
+    .parent1 {
+        display: flex;
+        flex-direction: row;
+        transform: skew(40deg);
+        z-index: 1;
+    }
+    
+    .parent2 {
+        display: flex;
+        flex-direction: row;
+        width: 1000px;
+        transform: skew(-40deg);
+        z-index: 1;
+    }
+    
+    .child {
+        border: 1px solid #e5e5e5;
+        border-bottom-color: transparent;
+    }
+    
+    .child2 {
+        border: 1px solid #e5e5e5;
+        border-top-color: transparent;
+    }
+    
+    .child,
+    .child2 {
+        width: 95px;
+        height: 12.5px;
+        background: #f6f6f6;
+        margin-left: 10px;
+        cursor: pointer;
+    }
+    
+    .text {
+        position: absolute;
+        color: #666;
+        font-size: 12px;
+        z-index: 8;
+    }
+    
+    .text>p {
+        display: inline-block;
+        width: 106px;
+        line-height: 4px;
+        text-align: center;
+    }
+    
+    .stop {
+        height: 25px;
+        line-height: 25px;
+        width: 95px;
+        border: 1px solid #D0021B;
+        background: fff;
+        text-align: center;
+        cursor: pointer;
+    }
+</style>
+
+<body>
+    <div class="box">
+        <div class="text">
+            <p>草稿</p>
+            <p>待审核</p>
+            <p>已经审核</p>
+            <p>哈哈哈</p>
+        </div>
+        <div class="parent1">
+            <div class="child">
+            </div>
+            <div class="child">
+            </div>
+            <div class="child">
+            </div>
+            <div class="child">
+            </div>
+        </div>
+        <div class="parent2">
+            <div class="child2">
+            </div>
+            <div class="child2">
+            </div>
+            <div class="child2">
+            </div>
+            <div class="child2">
+            </div>
+        </div>
+    </div>
+    <div class="stop">
+        已终止
+    </div>
+    <script>
+        const parent1 = document.getElementsByClassName('parent1')[0];
+        const parent2 = document.getElementsByClassName('parent2')[0];
+        const text = document.getElementsByClassName('text')[0];
+        const stop = document.getElementsByClassName('stop')[0]
+        const box = document.getElementsByClassName('box')[0]
+        const p1children = parent1.children;
+        const p2children = parent2.children;
+        const tchildren = text.children;
+        let gshow = false;
+        const arr = [{
+            "name": "待接单",
+            "status": "WAIT_ACCEPT",
+            "isShadowed": true
+        }];
+        if (arr.length === 1) {
+            gshow = true;
+        } else {
+            arr.forEach((item, index) => {
+                tchildren[index].innerHTML = item.name;
+                if (item.isCurrentStatus) {
+                    p1children[index].style.backgroundColor = "#108EE9"
+                    p2children[index].style.backgroundColor = "#108EE9"
+                    tchildren[index].style.color = "#fff"
+                    return;
+                }
+                if (item.isShadowed) {
+                    p1children[index].style.backgroundColor = "#f6f6f6"
+                    p2children[index].style.backgroundColor = "#f6f6f6"
+                    return;
+                }
+            })
+        }
+
+
+        function watchshow() {
+            if (!gshow) {
+                stop.style.display = 'none';
+                box.style.display = 'block'
+            } else {
+                box.style.display = 'none';
+                stop.style.display = 'block'
+            }
+        }
+        watchshow();
+    </script>
+</body>
+
+</html>
